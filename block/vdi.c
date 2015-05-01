@@ -713,6 +713,9 @@ static int vdi_co_write(BlockDriverState *bs,
         logout("will write %u block map sectors starting from entry %u\n",
                n_sectors, bmap_first);
         ret = bdrv_write(bs->file, offset, base, n_sectors);
+        if (ret >= 0) {
+            ret = bdrv_flush(bs->file);
+        }
     }
 
     return ret;
